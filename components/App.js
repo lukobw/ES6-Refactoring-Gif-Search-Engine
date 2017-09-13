@@ -10,22 +10,22 @@ App = React.createClass ({
             gif: {}
         };
     },
-    getGif: function(searchingText) {
+    getGif: (searchingText) => {
         return new Promise((resolve, reject) => {
-            var url = GIPHY_API_URL +  '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText).data;
-                var gif = {
+            const url = GIPHY_API_URL +  '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;
+            const request = new XMLHttpRequest();
+            request.open('GET', url);
+            request.onload = () => {
+                if (request.status === 200) {
+                const data = JSON.parse(request.responseText).data;
+                const gif = {
                     url: data.fixed_width_downsampled_url,
                     sourceUrl: data.url
                 };
                 resolve(gif);
-                }
+                } 
             };
-            xhr.send();
+            request.send();
         })
     },
     handleSearch: function(searchingText) {
